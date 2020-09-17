@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 
   struct node *head = NULL;
   int prime_count = 0;
-  push(&head, 1);
+  push(&head, NULL);
 
   for (int number = 1; number < number_cap; number++) {
     int prime_if_zero = 0;
