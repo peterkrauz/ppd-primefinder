@@ -47,6 +47,7 @@ void sort(struct node **h) {
     }
 }
 
+/* parou de funfar e só larguei */
 void print_list(struct node *head) {
     int column_counter = 1;
     struct node *current_node = head;

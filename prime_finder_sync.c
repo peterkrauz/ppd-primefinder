@@ -16,17 +16,17 @@ int main(int argc, char *argv[]) {
 
   struct node *head = NULL;
   int prime_count = 0;
-  push(&head, 0);
+  push(&head, 1);
 
   for (int number = 1; number < number_cap; number++) {
-    int is_prime = 0;
+    int prime_if_zero = 0;
     for (int i = 2; i <= number / 2; ++i) {
           if (number % i == 0) {
-              is_prime = 1;
+              prime_if_zero = 1;
               break;
           }
       }
-      if (is_prime == 0) {
+      if (prime_if_zero == 0) {
         prime_count += 1;
         push(&head, number);
       }
@@ -40,6 +40,6 @@ int main(int argc, char *argv[]) {
   printf("Here they are!");
   printf("\n\n");
   sleep(1);
-  print_list(head);
+  print_list_with_sections(head, 1);
   return 0;
 }
