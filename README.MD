@@ -1,5 +1,5 @@
 ## Prime Finder
-Aluno: Peter Michael Claes Krause
+Aluno: Peter Michael Claes Krause\n
 Matrícula: 18100869
 
 
@@ -21,7 +21,7 @@ Matrícula: 18100869
   ./<nome_do_output> 60000
   ```
   _Rodando versão sequencial passando 60.000 como teto de busca_
-
+___
 2) Versão assíncrona
 
   Compile o programa com:
