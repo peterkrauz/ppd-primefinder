@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <sys/msg.h>
+#include <sys/time.h>
 #include "linked_list.c"
 
 typedef struct thread_arguments {

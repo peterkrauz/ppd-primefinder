@@ -2,9 +2,10 @@
 
 pthread_mutex_t lock;
 void *find_primes_in_range();
+struct timeval start_time, end_time;
 
 int main(int argc, char *argv[]) {
-  int number_cap, workers, thread_result;
+  int number_cap, workers, thread_result, print_numbers;
 
   printf("Peter Krause's \033[1;31mPrimeFinder\033[0m V2\n");
   sleep(2);
@@ -12,12 +13,13 @@ int main(int argc, char *argv[]) {
   if (argc > 2) {
     number_cap = atoi(argv[1]);
     workers = atoi(argv[2]);
-    printf("\nSearching numbers from 0 to %d using %d worker threads\n", number_cap, workers);
+    print_numbers = 0; //atoi(argv[3]);
   } else {
-    printf("Using default values...\n");
-    number_cap = 1000;
-    workers = 2;
+    number_cap = 1000000;
+    workers = 8;
+    print_numbers = 0;
   }
+  printf("\nSearching numbers from 0 to %d using %d worker threads\n", number_cap, workers);
 
   int range_length = number_cap / workers;
   int prime_count = 0;
@@ -28,6 +30,7 @@ int main(int argc, char *argv[]) {
     argument_array[i] = malloc(sizeof(struct thread_arguments) * 1);
   }
 
+  gettimeofday(&start_time, NULL);
   for (int index=0; index<workers; index++) {
     struct node *head = NULL;
     push(&head, NULL);
@@ -46,11 +49,18 @@ int main(int argc, char *argv[]) {
       printf("Failed to join thread %d\n", index + 1);
     }
   }
+  gettimeofday(&end_time, NULL);
 
-  printf("Prime numbers are:\n");
-  for (size_t i = 0; i < workers; i++) {
-    print_list_with_sections(&argument_array[i]->head, i);
+  double time_spent = (end_time.tv_sec - start_time.tv_sec) + ((end_time.tv_usec - start_time.tv_usec)/1000000.0);
+
+  if (print_numbers == 1) {
+    printf("Prime numbers are:\n");
+    for (size_t i = 0; i < workers; i++) {
+      print_list_with_sections(&argument_array[i]->head, i);
+    }
   }
+  printf("Time spent searching for primes: %f\n", time_spent);
+  printf("Finished execution");
   return 0;
 }
 

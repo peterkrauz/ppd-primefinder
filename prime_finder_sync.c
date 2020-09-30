@@ -1,23 +1,26 @@
 #include "deps.h"
 
+struct timeval start_time, end_time;
+
 int main(int argc, char *argv[]) {
-  int number_cap;
+  int number_cap, print_numbers;
 
   printf("Peter Krause's \033[1;31mPrimeFinder\033[0m V1\n");
-  sleep(2);
 
   if (argc > 1) {
     number_cap = atoi(argv[1]);
-    printf("\nSearching numbers from 0 to %d\n", number_cap);
+    print_numbers = 0; //atoi(argv[2]);
   } else {
-    printf("\nUsing 10000 as default number cap...\n");
-    number_cap = 10000;
+    number_cap = 1000000;
+    print_numbers = 0;
   }
+  printf("\nSearching numbers from 0 to %d\n", number_cap);
 
   struct node *head = NULL;
   int prime_count = 0;
   push(&head, NULL);
 
+  gettimeofday(&start_time, NULL);
   for (int number = 1; number < number_cap; number++) {
     int prime_if_zero = 0;
     for (int i = 2; i <= number / 2; ++i) {
@@ -31,15 +34,20 @@ int main(int argc, char *argv[]) {
         push(&head, number);
       }
   }
+  gettimeofday(&end_time, NULL);
 
-  sleep(2);
+  double time_spent = (end_time.tv_sec - start_time.tv_sec) + ((end_time.tv_usec - start_time.tv_usec)/1000000.0);
 
   printf("\n");
   printf("There are %d prime numbers in range [0, %d]:\n", prime_count, number_cap);
-  sleep(1);
-  printf("Here they are!");
-  printf("\n\n");
-  sleep(1);
-  print_list_with_sections(head, 1);
+  if (print_numbers == 1) {
+    sleep(1);
+    printf("Here they are!");
+    printf("\n\n");
+    sleep(1);
+    print_list_with_sections(head, 1);
+  }
+  printf("Time spent searching for primes: %f\n", time_spent);
+  printf("Finished execution");
   return 0;
 }
